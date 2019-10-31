@@ -3,6 +3,7 @@ package com.ikhiloyaimokhai.expandablerecyclerview.expand;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,7 +19,7 @@ import static com.ikhiloyaimokhai.expandablerecyclerview.factory.GenreDataFactor
 /**
  * Created by Ikhiloya Imokhai on 2019-10-31.
  */
-public class ExpandActivity extends AppCompatActivity {
+public class ExpandActivity extends AppCompatActivity implements GenreAdapter.ListItemClickListener {
 
     public GenreAdapter adapter;
 
@@ -40,7 +41,7 @@ public class ExpandActivity extends AppCompatActivity {
             ((DefaultItemAnimator) animator).setSupportsChangeAnimations(false);
         }
 
-        adapter = new GenreAdapter(makeGenres());
+        adapter = new GenreAdapter(makeGenres(), this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
@@ -64,5 +65,11 @@ public class ExpandActivity extends AppCompatActivity {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         adapter.onRestoreInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void onListItemClick(String name, int childIndex) {
+        Toast.makeText(ExpandActivity.this, name + " - " + childIndex, Toast.LENGTH_LONG).show();
+
     }
 }

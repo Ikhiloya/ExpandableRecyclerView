@@ -2,7 +2,6 @@ package com.ikhiloyaimokhai.expandablerecyclerview.expand;
 
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ikhiloyaimokhai.expandablerecyclerview.R;
 import com.ikhiloyaimokhai.expandablerecyclerview.model.Artist;
@@ -17,6 +16,8 @@ public class ArtistViewHolder extends ChildViewHolder implements View.OnClickLis
     private TextView childTextView;
 
     private List<Artist> artistes;
+    private Artist artist;
+    private int childIndex;
 
     public ArtistViewHolder(View itemView) {
         super(itemView);
@@ -31,12 +32,12 @@ public class ArtistViewHolder extends ChildViewHolder implements View.OnClickLis
 
     @Override
     public void onClick(View view) {
-        String artiste = artistes.get(getAdapterPosition()).getName();
-        Toast.makeText(view.getContext(), artiste, Toast.LENGTH_LONG).show();
+        GenreAdapter.onItemClick(artist.getName(), childIndex);
     }
 
-    public void setArtistes(List<Artist> artistes) {
-        this.artistes = artistes;
+    protected void setArtistes(List<Artist> artistes, int childIndex) {
+        this.artist = artistes.get(childIndex);
+        this.childIndex = childIndex;
 
     }
 }

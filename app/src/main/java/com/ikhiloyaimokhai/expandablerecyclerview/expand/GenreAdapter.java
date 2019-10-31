@@ -22,28 +22,27 @@ import java.util.List;
 
 public class GenreAdapter extends ExpandableRecyclerViewAdapter<GenreViewHolder, ArtistViewHolder> {
 
-//    private ListItemClickListener listItemClickListener;
+    private static ListItemClickListener listItemClickListener;
 
-    public GenreAdapter(List<? extends ExpandableGroup> groups) {
+    public GenreAdapter(List<? extends ExpandableGroup> groups, ListItemClickListener listItemClickListener) {
         super(groups);
-//        this.listItemClickListener = listItemClickListener;
+        GenreAdapter.listItemClickListener = listItemClickListener;
     }
+
 
 
     /**
      * an interface to handle click events on a card
      */
     public interface ListItemClickListener {
-        void onListItemClick(int adapterPosition);
+        void onListItemClick(String name, int childIndex);
     }
 
-//    private void onItemClick(RecyclerView.ViewHolder holder) {
-//        if (listItemClickListener != null) {
-////            GeneralModel model = models.get(holder.getAdapterPosition());
-//            listItemClickListener.onListItemClick(holder.getAdapterPosition());
-//        }
-//    }
-
+    protected static void onItemClick(String name, int childIndex) {
+        if (listItemClickListener != null) {
+            listItemClickListener.onListItemClick(name, childIndex);
+        }
+    }
 
 
     @Override
@@ -66,7 +65,7 @@ public class GenreAdapter extends ExpandableRecyclerViewAdapter<GenreViewHolder,
 
         final Artist artist = ((Genre) group).getItems().get(childIndex);
         holder.setArtistName(artist.getName());
-        holder.setArtistes(((Genre) group).getItems());
+        holder.setArtistes(((Genre) group).getItems(), childIndex);
     }
 
     @Override
